@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nike_store/src/core/network/di/network_module.dart';
 import 'package:nike_store/src/data/di/api_module.dart';
 import 'package:nike_store/src/domain/di/repo_module.dart';
+import 'package:nike_store/src/presentation/ui/home/home.dart';
 
 void main() {
   networkInjector();
@@ -24,13 +25,8 @@ class MyApp extends StatelessWidget {
               bodyText2: TextStyle(
                 fontFamily: 'dana',
               ))),
+      home:
+          Directionality(textDirection: TextDirection.rtl, child: HomeScreen()),
     );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
   }
 }
