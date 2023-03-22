@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:kiwi/kiwi.dart';
 import 'package:nike_store/src/core/network/di/network_module.dart';
 import 'package:nike_store/src/data/di/api_module.dart';
 import 'package:nike_store/src/domain/di/repo_module.dart';
+import 'package:nike_store/src/domain/repository/comment/comment_repository.dart';
+import 'package:nike_store/src/presentation/ui/bottom_navigation.dart';
 import 'package:nike_store/src/presentation/ui/home/home.dart';
 
 void main() {
@@ -26,7 +29,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'dana',
               ))),
       home:
-          Directionality(textDirection: TextDirection.rtl, child: HomeScreen()),
+          Directionality(textDirection: TextDirection.rtl, child: RootScreen()),
     );
   }
 }
