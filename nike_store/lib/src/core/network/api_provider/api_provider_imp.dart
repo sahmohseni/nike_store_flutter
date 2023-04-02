@@ -10,4 +10,11 @@ class ApiProviderImp extends ApiProvider {
     final getResponse = await dio.get(path);
     return getResponse;
   }
+
+  @override
+  Future<Response> post(String path, bodyParameter) async {
+    final dio = KiwiContainer().resolve<Dio>();
+    final postResponse = await dio.post(path, data: bodyParameter);
+    return postResponse;
+  }
 }
