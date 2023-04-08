@@ -11,6 +11,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: LightTheme.primaryColor,
         centerTitle: true,
         title: const Text(
@@ -35,12 +36,13 @@ class CartScreen extends StatelessWidget {
                 isAuthenticated
                     ? ElevatedButton(
                         style: ButtonStyle(
+                            elevation: MaterialStateProperty.all(0),
                             backgroundColor: MaterialStateProperty.all(
                                 LightTheme.primaryColor)),
                         onPressed: () {
                           KiwiContainer().resolve<AuthRepository>().signOut();
                         },
-                        child: Text(
+                        child: const Text(
                           'خروج از حساب',
                           style: TextStyle(
                               fontFamily: 'dana', color: Colors.white),
@@ -54,7 +56,7 @@ class CartScreen extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => AuthScreen()));
                         },
-                        child: Text(
+                        child: const Text(
                           'ورود به حساب',
                           style: TextStyle(
                               fontFamily: 'dana', color: Colors.white),

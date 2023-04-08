@@ -155,7 +155,13 @@ class _AuthScreenState extends State<AuthScreen> {
                                             passWord: passWordController.text));
                                   },
                                   child: state is AuthLoading
-                                      ? CircularProgressIndicator()
+                                      ? const SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        )
                                       : Center(
                                           child: Row(
                                             mainAxisAlignment:
