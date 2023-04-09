@@ -8,7 +8,7 @@ class AuthApiImp extends AuthApi {
   Future<ApiResponse> login(String userName, String passWord) async {
     final loginResponse = await KiwiContainer()
         .resolve<ApiProvider>()
-        .post('http://expertdevelopers.ir/api/v1/auth/token', {
+        .post('http://expertdevelopers.ir/api/v1/auth/token', bodyParameter: {
       'grant_type': 'password',
       'client_id': 2,
       'client_secret': 'kyj1c9sVcksqGU4scMX7nLDalkjp2WoqQEf8PKAC',
@@ -22,7 +22,7 @@ class AuthApiImp extends AuthApi {
   Future<ApiResponse> refreshToken(String token) async {
     final refreshTokenResponse = await KiwiContainer()
         .resolve<ApiProvider>()
-        .post('http://expertdevelopers.ir/api/v1/auth/token', {
+        .post('http://expertdevelopers.ir/api/v1/auth/token', bodyParameter: {
       'grant_type': 'refresh_token',
       'refresh_token': token,
       'client_id': 2,
@@ -35,7 +35,7 @@ class AuthApiImp extends AuthApi {
   Future<ApiResponse> signUp(String userName, String passWord) async {
     final signUpResponse = await KiwiContainer().resolve<ApiProvider>().post(
         'http://expertdevelopers.ir/api/v1/user/register',
-        {'email': userName, 'password': passWord});
+        bodyParameter: {'email': userName, 'password': passWord});
     return ApiResponse.fromResponse(response: signUpResponse);
   }
 }

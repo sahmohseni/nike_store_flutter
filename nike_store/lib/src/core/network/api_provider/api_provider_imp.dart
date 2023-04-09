@@ -12,7 +12,8 @@ class ApiProviderImp extends ApiProvider {
   }
 
   @override
-  Future<Response> post(String path, bodyParameter) async {
+  Future<Response> post(String path,
+      {dynamic bodyParameter, Map<String, dynamic>? headerParameter}) async {
     final dio = KiwiContainer().resolve<Dio>();
     final postResponse = await dio.post(path, data: bodyParameter);
     return postResponse;
