@@ -16,6 +16,6 @@ class CartError extends CartState {
 }
 
 class CartSuccess extends CartState {
-  final List<CartResponse> cartItems;
-  const CartSuccess({required this.cartItems});
+  final CartResponse cartResponse;
+  const CartSuccess({required this.cartResponse});
 }
