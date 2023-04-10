@@ -3,6 +3,8 @@ import 'package:nike_store/src/data/api/auth/auth_api.dart';
 import 'package:nike_store/src/data/api/auth/auth_api_imp.dart';
 import 'package:nike_store/src/data/api/banner/banner_api.dart';
 import 'package:nike_store/src/data/api/banner/banner_api_imp.dart';
+import 'package:nike_store/src/data/api/cart/cart_api.dart';
+import 'package:nike_store/src/data/api/cart/cart_api_imp.dart';
 import 'package:nike_store/src/data/api/comment/comment_api.dart';
 import 'package:nike_store/src/data/api/comment/comment_api_provider.dart';
 import 'package:nike_store/src/data/api/product/product_api.dart';
@@ -13,4 +15,5 @@ void apiInjector() {
   KiwiContainer().registerFactory<BannerApi>((container) => BannerApiImp());
   KiwiContainer().registerFactory<CommentApi>((container) => CommentApiImp());
   KiwiContainer().registerFactory<AuthApi>((container) => AuthApiImp());
+  KiwiContainer().registerFactory<CartApi>((container) => CartApiImp());
 }

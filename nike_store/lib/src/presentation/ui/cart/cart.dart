@@ -3,12 +3,20 @@ import 'package:kiwi/kiwi.dart';
 import 'package:nike_store/src/domain/model/auth/auth_info.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository_imp.dart';
+import 'package:nike_store/src/domain/repository/cart/cart_repository.dart';
 import 'package:nike_store/src/presentation/ui/auth/auth.dart';
 import 'package:nike_store/theme.dart';
 
 class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    KiwiContainer().resolve<CartRepository>().getAllCartItem().then(
+      (value) {
+        debugPrint(value.toString());
+      },
+    ).catchError((e) {
+      debugPrint(e.toString());
+    });
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
