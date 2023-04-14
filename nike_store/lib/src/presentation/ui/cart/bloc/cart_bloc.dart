@@ -21,7 +21,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           emit(CartAuthRequired());
         } else {
           try {
-            emit(CartLoading());
+            if (!event.isRefreshing) {
+              emit(CartLoading());
+            }
+
             final result = await KiwiContainer()
                 .resolve<CartRepository>()
                 .getAllCartItem();

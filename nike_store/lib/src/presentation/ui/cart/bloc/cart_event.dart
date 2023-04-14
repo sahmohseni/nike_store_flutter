@@ -10,7 +10,9 @@ abstract class CartEvent extends Equatable {
 
 class CartStarted extends CartEvent {
   final AuthInfo? authInfo;
-  const CartStarted({required this.authInfo});
+  final bool isRefreshing;
+
+  const CartStarted({required this.authInfo, this.isRefreshing = false});
 }
 
 class CartAuthChangeInfo extends CartEvent {
