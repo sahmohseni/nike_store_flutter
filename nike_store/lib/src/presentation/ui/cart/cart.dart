@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:nike_store/src/domain/model/cart/cart_item.dart';
 import 'package:nike_store/src/domain/model/cart/cart_response.dart';
@@ -10,6 +11,7 @@ import 'package:nike_store/src/presentation/ui/auth/auth.dart';
 import 'package:nike_store/src/presentation/ui/cart/bloc/cart_bloc.dart';
 import 'package:nike_store/src/presentation/ui/home/home.dart';
 import 'package:nike_store/src/presentation/widgets/app_exception.dart';
+import 'package:nike_store/src/presentation/widgets/empty_view.dart';
 import 'package:nike_store/theme.dart';
 
 class CartScreen extends StatefulWidget {
@@ -97,8 +99,15 @@ class _CartScreenState extends State<CartScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                        'برای مشاهده ی سبدخرید باید وارد حساب کاربری خود شوید'),
+                    EmptyView(
+                        message: const Text(
+                          'برای مشاهده سبدخرید باید وارد شوید',
+                          style: TextStyle(fontFamily: 'dana'),
+                        ),
+                        image: SvgPicture.asset(
+                          'assets/images/auth_required.svg',
+                          width: 120,
+                        )),
                     const SizedBox(
                       height: 12,
                     ),
@@ -123,6 +132,13 @@ class _CartScreenState extends State<CartScreen> {
                   ],
                 ),
               );
+            } else if (state is CartEmpty) {
+              return EmptyView(
+                  message: const Text('سبد خرید شما خالی است'),
+                  image: SvgPicture.asset(
+                    'assets/images/empty_cart.svg',
+                    width: 120,
+                  ));
             } else {
               throw AppException(errorMessage: 'error');
             }
