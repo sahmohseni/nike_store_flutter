@@ -15,7 +15,7 @@ class HomeSuccess extends HomeState {
   final List<ProductEntity> highToLowPrice;
   final List<ProductEntity> lowToHighPrice;
   final List<BannerEntity> banners;
-  HomeSuccess(
+  const HomeSuccess(
       {required this.latestProducts,
       required this.popularestProducts,
       required this.highToLowPrice,
@@ -25,5 +25,5 @@ class HomeSuccess extends HomeState {
 
 class HomeError extends HomeState {
   final String errorMessage;
-  HomeError({required this.errorMessage});
+  const HomeError({required this.errorMessage});
 }

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository.dart';
-import 'package:nike_store/src/domain/repository/cart/cart_repository.dart';
 import 'package:nike_store/theme.dart';
 
 class ProfileScreen extends StatelessWidget {

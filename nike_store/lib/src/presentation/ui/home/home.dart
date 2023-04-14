@@ -336,7 +336,7 @@ class ProductItemList extends StatelessWidget {
           InkWell(
             onTap: onTap,
             child: Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               height: 200,
               width: 200,
               child: ImageLoadingService(imageUrl: productEntity.image),
@@ -356,7 +356,7 @@ class ProductItemList extends StatelessWidget {
                 ),
                 Text(
                   'Toman' + " " + productEntity.previous_price.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                       decoration: TextDecoration.lineThrough,
                       color: Colors.grey,
                       fontSize: 13),

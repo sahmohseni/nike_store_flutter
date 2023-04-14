@@ -50,7 +50,7 @@ class _RootScreenState extends State<RootScreen> {
             index: selectedScreenIndex,
             children: [
               _Navigator(_homeKey, homeIndex, HomeScreen()),
-              _Navigator(_cartKey, cartIndex, CartScreen()),
+              _Navigator(_cartKey, cartIndex, const CartScreen()),
               _Navigator(_profileKey, profileIndex, ProfileScreen())
             ],
           ),

@@ -5,6 +5,8 @@ import 'package:nike_store/src/presentation/ui/auth/bloc/auth_bloc.dart';
 import 'package:nike_store/theme.dart';
 
 class AuthScreen extends StatefulWidget {
+  const AuthScreen({super.key});
+
   @override
   State<AuthScreen> createState() => _AuthScreenState();
 }

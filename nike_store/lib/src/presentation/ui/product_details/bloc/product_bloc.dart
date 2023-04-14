@@ -22,7 +22,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           emit(ProductSuccess());
         }
       } catch (e) {
-        emit(ProductError(errorMessage: 'به سبد خرید اضافه نشد'));
+        emit(const ProductError(errorMessage: 'به سبد خرید اضافه نشد'));
       }
     });
   }

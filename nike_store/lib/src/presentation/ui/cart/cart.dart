@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:nike_store/src/domain/model/cart/cart_item.dart';
-import 'package:nike_store/src/domain/model/cart/cart_response.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository_imp.dart';
 import 'package:nike_store/src/domain/repository/cart/cart_repository.dart';
 import 'package:nike_store/src/presentation/ui/auth/auth.dart';
