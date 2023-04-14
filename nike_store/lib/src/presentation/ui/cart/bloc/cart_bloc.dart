@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:kiwi/kiwi.dart';
@@ -45,6 +47,27 @@ class CartBloc extends Bloc<CartEvent, CartState> {
               emit(const CartError(
                   errorMessage: 'نمایش سبد خرید با مشکل مواجه شده است'));
             }
+          }
+        }
+      } else if (event is CartDeleteButtonClicked) {
+        if (state is CartSuccess) {
+          final successState = (state as CartSuccess);
+          final index = successState.cartResponse.cartItems
+              .indexWhere((element) => element.cartItemId == event.productId);
+          successState.cartResponse.cartItems[index].deleteButtonLoading = true;
+          emit(CartSuccess(cartResponse: successState.cartResponse));
+        }
+        await KiwiContainer()
+            .resolve<CartRepository>()
+            .removeFromCart(event.productId);
+        if (state is CartSuccess) {
+          final successState = (state as CartSuccess);
+          successState.cartResponse.cartItems
+              .removeWhere((element) => element.cartItemId == event.productId);
+          if (successState.cartResponse.cartItems.isEmpty) {
+            emit(CartEmpty());
+          } else {
+            emit(CartSuccess(cartResponse: successState.cartResponse));
           }
         }
       }

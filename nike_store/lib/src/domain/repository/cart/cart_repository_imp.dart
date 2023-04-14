@@ -17,4 +17,10 @@ class CartRepositoryImp extends CartRepository {
     final response = await KiwiContainer().resolve<CartApi>().getAllCartItem();
     return CartResponse.fromJson(response.data);
   }
+
+  @override
+  Future<void> removeFromCart(int cartItemId) async {
+    final response =
+        await KiwiContainer().resolve<CartApi>().removeFromCart(cartItemId);
+  }
 }

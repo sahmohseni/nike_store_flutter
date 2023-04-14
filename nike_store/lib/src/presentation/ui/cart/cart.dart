@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
+import 'package:nike_store/src/domain/model/cart/cart_item.dart';
 import 'package:nike_store/src/domain/model/cart/cart_response.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository_imp.dart';
 import 'package:nike_store/src/domain/repository/cart/cart_repository.dart';
@@ -67,9 +68,18 @@ class _CartScreenState extends State<CartScreen> {
         child: BlocBuilder<CartBloc, CartState>(
           builder: (context, state) {
             if (state is CartSuccess) {
-              return CartItem(
-                onTap: () {},
-                cartResponseInstance: state.cartResponse,
+              return ListView.builder(
+                itemCount: state.cartResponse.cartItems.length,
+                itemBuilder: (context, index) {
+                  final data = state.cartResponse.cartItems[index];
+                  return CartItem(
+                    data: data,
+                    onTap: () {
+                      BlocProvider.of<CartBloc>(context).add(
+                          CartDeleteButtonClicked(productId: data.cartItemId));
+                    },
+                  );
+                },
               );
             } else if (state is CartLoading) {
               return const Center(
@@ -172,134 +182,125 @@ class _CartScreenState extends State<CartScreen> {
 }
 
 class CartItem extends StatelessWidget {
-  final CartResponse cartResponseInstance;
   final GestureTapCallback onTap;
   const CartItem({
     super.key,
-    required this.cartResponseInstance,
+    required this.data,
     required this.onTap,
   });
 
+  final CartItemEntity data;
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: cartResponseInstance.cartItems.length,
-      itemBuilder: (context, index) {
-        final data = cartResponseInstance.cartItems[index];
-        return Container(
-          width: double.infinity,
-          margin: const EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-              color: LightTheme.itemBackGroundColor.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 2)
-              ]),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+          color: LightTheme.itemBackGroundColor.withOpacity(0.3),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(0.01), blurRadius: 2)
+          ]),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                SizedBox(
+                    height: 100,
+                    width: 100,
+                    child: ImageLoadingService(imageUrl: data.product.image)),
+                const SizedBox(
+                  width: 16,
+                ),
+                Expanded(
+                  child: Text(
+                    data.product.title,
+                    style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'dana',
+                        fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
                   children: [
-                    SizedBox(
-                        height: 100,
-                        width: 100,
-                        child:
-                            ImageLoadingService(imageUrl: data.product.image)),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                      child: Text(
-                        data.product.title,
-                        style: const TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'dana',
-                            fontWeight: FontWeight.bold),
-                      ),
+                    const Text('تعداد'),
+                    Row(
+                      children: [
+                        const Icon(CupertinoIcons.plus_square),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          data.count.toString(),
+                          style: const TextStyle(
+                              fontFamily: 'dana', fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        const Icon(CupertinoIcons.minus_square)
+                      ],
                     )
                   ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Expanded(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Column(
-                      children: [
-                        const Text('تعداد'),
-                        Row(
-                          children: [
-                            const Icon(CupertinoIcons.plus_square),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            Text(
-                              data.count.toString(),
-                              style: const TextStyle(
-                                  fontFamily: 'dana',
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            const Icon(CupertinoIcons.minus_square)
-                          ],
-                        )
-                      ],
-                    ),
-                    Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          data.product.previous_price.toString() +
-                              " " +
-                              "تومان",
-                          style: TextStyle(
-                            decoration: TextDecoration.lineThrough,
-                            fontFamily: 'dana',
-                            fontSize: 16,
-                            color: Colors.black.withOpacity(0.5),
-                          ),
-                        ),
-                        Text(
-                          data.product.price.toString() + " " + "تومان",
-                          style: const TextStyle(
-                            fontFamily: 'dana',
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ],
-                    ))
-                  ],
-                ),
-              ),
-              const Divider(
-                height: 1,
-                thickness: 2,
-              ),
-              Center(
-                child: TextButton.icon(
-                    onPressed: onTap,
-                    icon: const Icon(
-                      CupertinoIcons.delete,
-                      color: LightTheme.primaryColor,
-                      size: 18,
-                    ),
-                    label: const Text(
-                      'حذف از سبد',
+                    Text(
+                      data.product.previous_price.toString() + " " + "تومان",
                       style: TextStyle(
-                          fontFamily: 'dana', color: LightTheme.primaryColor),
-                    )),
-              )
-            ],
+                        decoration: TextDecoration.lineThrough,
+                        fontFamily: 'dana',
+                        fontSize: 16,
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                    ),
+                    Text(
+                      data.product.price.toString() + " " + "تومان",
+                      style: const TextStyle(
+                        fontFamily: 'dana',
+                        fontSize: 18,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ))
+              ],
+            ),
           ),
-        );
-      },
+          const Divider(
+            height: 1,
+            thickness: 2,
+          ),
+          Center(
+            child: TextButton.icon(
+                onPressed: onTap,
+                icon: const Icon(
+                  CupertinoIcons.delete,
+                  color: LightTheme.primaryColor,
+                  size: 18,
+                ),
+                label: const Text(
+                  'حذف از سبد',
+                  style: TextStyle(
+                      fontFamily: 'dana', color: LightTheme.primaryColor),
+                )),
+          )
+        ],
+      ),
     );
   }
 }

@@ -33,8 +33,11 @@ class CartApiImp extends CartApi {
   }
 
   @override
-  Future<ApiResponse> removeFromCart(int cartItemId) {
-    // TODO: implement removeFromCart
-    throw UnimplementedError();
+  Future<ApiResponse> removeFromCart(int cartItemId) async {
+    final removeFromCartResponse = await KiwiContainer()
+        .resolve<ApiProvider>()
+        .post('http://expertdevelopers.ir/api/v1/cart/remove',
+            bodyParameter: {'cart_item_id': cartItemId});
+    return ApiResponse.fromResponse(response: removeFromCartResponse);
   }
 }
