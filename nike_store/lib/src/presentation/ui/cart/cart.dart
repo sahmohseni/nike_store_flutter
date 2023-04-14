@@ -10,8 +10,31 @@ import 'package:nike_store/src/presentation/ui/home/home.dart';
 import 'package:nike_store/src/presentation/widgets/app_exception.dart';
 import 'package:nike_store/theme.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  late final CartBloc _cartBloc;
+  @override
+  void initState() {
+    AuthRepositoryImp.authChangeNotifier.addListener(authChangeNotifierMode);
+    super.initState();
+  }
+
+  void authChangeNotifierMode() {
+    _cartBloc.add(CartAuthChangeInfo(
+        authInfo: AuthRepositoryImp.authChangeNotifier.value));
+  }
+
+  @override
+  void dispose() {
+    AuthRepositoryImp.authChangeNotifier.removeListener(authChangeNotifierMode);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +58,7 @@ class CartScreen extends StatelessWidget {
       body: BlocProvider<CartBloc>(
         create: (context) {
           final cartBloc = CartBloc();
+          _cartBloc = cartBloc;
           cartBloc.add(CartStarted(
               authInfo: AuthRepositoryImp.authChangeNotifier.value));
           return cartBloc;

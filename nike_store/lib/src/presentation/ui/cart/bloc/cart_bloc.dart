@@ -13,22 +13,40 @@ part 'cart_state.dart';
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartLoading()) {
     on<CartEvent>((event, emit) async {
-      try {
-        if (event is CartStarted) {
-          final authInfo = AuthRepositoryImp.authChangeNotifier.value;
-          if (authInfo == null || authInfo.accessToken.isEmpty) {
-            emit(CartAuthRequired());
-          } else {
+      if (event is CartStarted) {
+        final authInfo = AuthRepositoryImp.authChangeNotifier.value;
+        if (authInfo == null || authInfo.accessToken.isEmpty) {
+          emit(CartAuthRequired());
+        } else {
+          try {
             emit(CartLoading());
             final result = await KiwiContainer()
                 .resolve<CartRepository>()
                 .getAllCartItem();
             emit(CartSuccess(cartResponse: result));
+          } catch (e) {
+            emit(const CartError(
+                errorMessage: 'نمایش سبد خرید با مشکل مواجه شده است'));
           }
         }
-      } catch (e) {
-        emit(const CartError(
-            errorMessage: 'نمایش سبدخرید با مشکل مواجه شده است'));
+      } else if (event is CartAuthChangeInfo) {
+        final authInfo = AuthRepositoryImp.authChangeNotifier.value;
+        if (authInfo == null || authInfo.accessToken.isEmpty) {
+          emit(CartAuthRequired());
+        } else {
+          if (state is CartAuthRequired) {
+            try {
+              emit(CartLoading());
+              final result = await KiwiContainer()
+                  .resolve<CartRepository>()
+                  .getAllCartItem();
+              emit(CartSuccess(cartResponse: result));
+            } catch (e) {
+              emit(const CartError(
+                  errorMessage: 'نمایش سبد خرید با مشکل مواجه شده است'));
+            }
+          }
+        }
       }
     });
   }
