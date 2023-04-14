@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_store/src/presentation/ui/cart/cart.dart';
 import 'package:nike_store/src/presentation/ui/home/home.dart';
+import 'package:nike_store/src/presentation/ui/profile/profile.dart';
 import 'package:nike_store/theme.dart';
 
 const int homeIndex = 0;
@@ -50,7 +51,7 @@ class _RootScreenState extends State<RootScreen> {
             children: [
               _Navigator(_homeKey, homeIndex, HomeScreen()),
               _Navigator(_cartKey, cartIndex, CartScreen()),
-              _Navigator(_profileKey, profileIndex, Text('profile'))
+              _Navigator(_profileKey, profileIndex, ProfileScreen())
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(

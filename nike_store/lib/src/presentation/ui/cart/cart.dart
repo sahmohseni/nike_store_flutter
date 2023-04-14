@@ -169,6 +169,10 @@ class CartScreen extends StatelessWidget {
                       height: 12,
                     ),
                     ElevatedButton.icon(
+                        style: ButtonStyle(
+                            elevation: MaterialStateProperty.all(0),
+                            backgroundColor: MaterialStateProperty.all(
+                                LightTheme.primaryColor)),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => AuthScreen(),
