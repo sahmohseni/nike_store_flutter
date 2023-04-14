@@ -43,7 +43,8 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 _globalKey.currentState!.showSnackBar(SnackBar(
                     content: Text(
                   state.errorMessage,
-                  style: TextStyle(fontFamily: 'dana', color: Colors.white),
+                  style:
+                      const TextStyle(fontFamily: 'dana', color: Colors.white),
                 )));
               } else if (state is ProductSuccess) {
                 _globalKey.currentState!.showSnackBar(const SnackBar(
@@ -108,7 +109,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                       widget.product.title,
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(fontSize: 15),
+                                      style: const TextStyle(fontSize: 15),
                                     ),
                                   ),
                                   Column(
@@ -118,7 +119,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                                 .toString() +
                                             " " +
                                             "Toman",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: Colors.grey,
                                             decoration:
                                                 TextDecoration.lineThrough,
@@ -128,7 +129,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                         widget.product.price.toString() +
                                             " " +
                                             "Toman",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16,
                                             decoration:
                                                 TextDecoration.lineThrough),
@@ -148,7 +149,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 ),
                                 TextButton(
                                     onPressed: () {},
-                                    child: Text(
+                                    child: const Text(
                                       'ثبت نظر',
                                       style: TextStyle(
                                           color: LightTheme.primaryColor,

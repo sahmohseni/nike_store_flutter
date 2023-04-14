@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:nike_store/src/domain/model/auth/auth_info.dart';
-import 'package:nike_store/src/domain/repository/auth/auth_repository.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository_imp.dart';
 import 'package:nike_store/src/domain/repository/cart/cart_repository.dart';
 import 'package:nike_store/src/presentation/ui/auth/auth.dart';
@@ -13,6 +11,8 @@ import 'package:nike_store/src/presentation/widgets/app_exception.dart';
 import 'package:nike_store/theme.dart';
 
 class CartScreen extends StatelessWidget {
+  const CartScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     KiwiContainer().resolve<CartRepository>().getAllCartItem().then(
@@ -35,7 +35,8 @@ class CartScreen extends StatelessWidget {
       body: BlocProvider<CartBloc>(
         create: (context) {
           final cartBloc = CartBloc();
-          cartBloc.add(CartStarted());
+          cartBloc.add(CartStarted(
+              authInfo: AuthRepositoryImp.authChangeNotifier.value));
           return cartBloc;
         },
         child: BlocBuilder<CartBloc, CartState>(
@@ -74,7 +75,7 @@ class CartScreen extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   data.product.title,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'dana',
                                       fontWeight: FontWeight.bold),
@@ -90,7 +91,7 @@ class CartScreen extends StatelessWidget {
                             children: [
                               Column(
                                 children: [
-                                  Text('تعداد'),
+                                  const Text('تعداد'),
                                   Row(
                                     children: [
                                       const Icon(CupertinoIcons.plus_square),
@@ -99,7 +100,7 @@ class CartScreen extends StatelessWidget {
                                       ),
                                       Text(
                                         data.count.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontFamily: 'dana',
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -130,7 +131,7 @@ class CartScreen extends StatelessWidget {
                                     data.product.price.toString() +
                                         " " +
                                         "تومان",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'dana',
                                       fontSize: 18,
                                       color: Colors.black,
@@ -153,8 +154,36 @@ class CartScreen extends StatelessWidget {
                 ),
               );
             } else if (state is CartError) {
-              return Center(
+              return const Center(
                 child: Text('در نمایش سبد خرید مشکلی پیش آمده است '),
+              );
+            } else if (state is CartAuthRequired) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                        'برای مشاهده ی سبدخرید باید وارد حساب کاربری خود شوید'),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AuthScreen(),
+                          ));
+                        },
+                        icon: const Icon(CupertinoIcons.arrow_left),
+                        label: const Text(
+                          'ورود',
+                          style: TextStyle(
+                              fontFamily: 'dana',
+                              fontSize: 14,
+                              color: Colors.white),
+                        ))
+                  ],
+                ),
               );
             } else {
               throw AppException(errorMessage: 'error');

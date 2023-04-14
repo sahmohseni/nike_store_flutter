@@ -2,7 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nike_store/src/domain/model/comment/comment.dart';
 import 'package:nike_store/src/presentation/ui/product_details/comment_list/bloc/comment_bloc.dart';
 import 'package:nike_store/src/presentation/widgets/app_exception.dart';
 import 'package:nike_store/theme.dart';
@@ -27,8 +26,8 @@ class CommentList extends StatelessWidget {
             return SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
               return Container(
-                margin: EdgeInsets.all(8),
-                padding: EdgeInsets.fromLTRB(16, 16, 16, 16),
+                margin: const EdgeInsets.all(8),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   border: Border.all(width: 0.5, color: Colors.grey),
@@ -93,7 +92,7 @@ class CommentList extends StatelessWidget {
               ),
             );
           } else if (state is CommentLoading) {
-            return SliverToBoxAdapter(
+            return const SliverToBoxAdapter(
               child: Center(
                 child: CircularProgressIndicator(
                   color: LightTheme.primaryColor,

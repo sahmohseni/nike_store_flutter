@@ -5,10 +5,7 @@ import 'package:nike_store/src/data/di/api_module.dart';
 import 'package:nike_store/src/domain/di/repo_module.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository_imp.dart';
-import 'package:nike_store/src/domain/repository/comment/comment_repository.dart';
-import 'package:nike_store/src/presentation/ui/auth/auth.dart';
 import 'package:nike_store/src/presentation/ui/bottom_navigation.dart';
-import 'package:nike_store/src/presentation/ui/home/home.dart';
 
 void main() {
   networkInjector();

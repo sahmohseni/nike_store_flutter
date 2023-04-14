@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:dio/src/response.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:nike_store/src/core/network/api_provider/api_provider.dart';
 

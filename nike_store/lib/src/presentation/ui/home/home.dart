@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
         child: Scaffold(
           body: Center(
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: BlocBuilder<HomeBloc, HomeState>(
                 builder: (context, state) {
                   if (state is HomeSuccess) {
@@ -76,7 +76,8 @@ class HomeScreen extends StatelessWidget {
                             itemCount: state.banners.length,
                             itemBuilder: (context, index) {
                               return Container(
-                                padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+                                padding:
+                                    const EdgeInsets.fromLTRB(16, 0, 16, 16),
                                 child: ImageLoadingService(
                                     imageUrl: state.banners[index].image),
                               );
@@ -106,7 +107,7 @@ class HomeScreen extends StatelessWidget {
                           child: SizedBox(
                             height: 300,
                             child: ListView.builder(
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               itemCount: state.latestProducts.length,
                               itemBuilder: (context, index) {
@@ -205,7 +206,7 @@ class HomeScreen extends StatelessWidget {
                                     },
                                   ));
                                 },
-                                child: Container(
+                                child: SizedBox(
                                   height: 70,
                                   width: 70,
                                   child: ImageLoadingService(
