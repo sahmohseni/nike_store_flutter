@@ -286,19 +286,20 @@ class CartItem extends StatelessWidget {
             thickness: 2,
           ),
           Center(
-            child: TextButton.icon(
-                onPressed: onTap,
-                icon: const Icon(
-                  CupertinoIcons.delete,
-                  color: LightTheme.primaryColor,
-                  size: 18,
-                ),
-                label: const Text(
-                  'حذف از سبد',
-                  style: TextStyle(
-                      fontFamily: 'dana', color: LightTheme.primaryColor),
-                )),
-          )
+              child: TextButton(
+                  onPressed: onTap,
+                  child: Center(
+                    child: TextButton(
+                        onPressed: onTap,
+                        child: data.deleteButtonLoading
+                            ? const CupertinoActivityIndicator()
+                            : const Text(
+                                'حذف از سبد',
+                                style: TextStyle(
+                                    fontFamily: 'dana',
+                                    color: LightTheme.primaryColor),
+                              )),
+                  )))
         ],
       ),
     );
