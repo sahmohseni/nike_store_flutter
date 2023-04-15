@@ -10,9 +10,11 @@ import 'package:nike_store/src/domain/repository/auth/auth_repository_imp.dart';
 import 'package:nike_store/src/domain/repository/cart/cart_repository.dart';
 import 'package:nike_store/src/presentation/ui/auth/auth.dart';
 import 'package:nike_store/src/presentation/ui/cart/bloc/cart_bloc.dart';
+import 'package:nike_store/src/presentation/ui/cart/cart_price_info.dart';
 import 'package:nike_store/src/presentation/ui/home/home.dart';
 import 'package:nike_store/src/presentation/widgets/app_exception.dart';
 import 'package:nike_store/src/presentation/widgets/empty_view.dart';
+import 'package:nike_store/src/presentation/widgets/utils.dart';
 import 'package:nike_store/theme.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -96,17 +98,24 @@ class _CartScreenState extends State<CartScreen> {
                   releaseText: 'رها کنید',
                 ),
                 child: ListView.builder(
-                  itemCount: state.cartResponse.cartItems.length,
+                  itemCount: state.cartResponse.cartItems.length + 1,
                   itemBuilder: (context, index) {
-                    final data = state.cartResponse.cartItems[index];
-                    return CartItem(
-                      data: data,
-                      onTap: () {
-                        BlocProvider.of<CartBloc>(context).add(
-                            CartDeleteButtonClicked(
-                                productId: data.cartItemId));
-                      },
-                    );
+                    if (index < state.cartResponse.cartItems.length) {
+                      final data = state.cartResponse.cartItems[index];
+                      return CartItem(
+                        data: data,
+                        onTap: () {
+                          BlocProvider.of<CartBloc>(context).add(
+                              CartDeleteButtonClicked(
+                                  productId: data.cartItemId));
+                        },
+                      );
+                    } else {
+                      return CartPriceInfo(
+                          payablePrice: state.cartResponse.payablePrice,
+                          totalPrice: state.cartResponse.totalPrice,
+                          shippingCost: state.cartResponse.shippingCost);
+                    }
                   },
                 ),
               );
@@ -303,7 +312,7 @@ class CartItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      data.product.previous_price.toString() + " " + "تومان",
+                      data.product.previous_price.withPriceLabel,
                       style: TextStyle(
                         decoration: TextDecoration.lineThrough,
                         fontFamily: 'dana',
@@ -312,7 +321,7 @@ class CartItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      data.product.price.toString() + " " + "تومان",
+                      data.product.price.withPriceLabel,
                       style: const TextStyle(
                         fontFamily: 'dana',
                         fontSize: 18,

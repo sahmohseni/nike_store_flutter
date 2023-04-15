@@ -9,6 +9,7 @@ import 'package:nike_store/src/domain/model/product/product.dart';
 import 'package:nike_store/src/presentation/ui/home/bloc/home_bloc.dart';
 import 'package:nike_store/src/presentation/ui/product_details/product_details_screen.dart';
 import 'package:nike_store/src/presentation/widgets/app_exception.dart';
+import 'package:nike_store/src/presentation/widgets/utils.dart';
 import 'package:nike_store/theme.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -355,14 +356,14 @@ class ProductItemList extends StatelessWidget {
                   style: TextStyle(overflow: TextOverflow.clip),
                 ),
                 Text(
-                  'Toman' + " " + productEntity.previous_price.toString(),
+                  productEntity.previous_price.withPriceLabel,
                   style: const TextStyle(
                       decoration: TextDecoration.lineThrough,
                       color: Colors.grey,
                       fontSize: 13),
                 ),
                 Text(
-                  productEntity.price.toString() + " " + 'Toman',
+                  productEntity.price.withPriceLabel,
                 )
               ],
             ),

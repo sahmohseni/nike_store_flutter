@@ -8,6 +8,7 @@ import 'package:nike_store/src/domain/model/product/product.dart';
 import 'package:nike_store/src/presentation/ui/home/home.dart';
 import 'package:nike_store/src/presentation/ui/product_details/bloc/product_bloc.dart';
 import 'package:nike_store/src/presentation/ui/product_details/comment_list/comment_list.dart';
+import 'package:nike_store/src/presentation/widgets/utils.dart';
 import 'package:nike_store/theme.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -116,9 +117,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                     children: [
                                       Text(
                                         widget.product.previous_price
-                                                .toString() +
-                                            " " +
-                                            "Toman",
+                                            .withPriceLabel,
                                         style: const TextStyle(
                                             color: Colors.grey,
                                             decoration:
@@ -126,9 +125,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                             fontSize: 15),
                                       ),
                                       Text(
-                                        widget.product.price.toString() +
-                                            " " +
-                                            "Toman",
+                                        widget.product.price.withPriceLabel,
                                         style: const TextStyle(
                                             fontSize: 16,
                                             decoration:
