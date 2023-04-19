@@ -3,8 +3,9 @@ import 'package:nike_store/src/domain/model/product/product.dart';
 class CartItemEntity {
   final int cartItemId;
   final ProductEntity product;
-  final int count;
+  int count;
   bool deleteButtonLoading = false;
+  bool isChangeCount = false;
   CartItemEntity.fromJson(Map<String, dynamic> json)
       : cartItemId = json['cart_item_id'],
         product = ProductEntity.fromJson(json['product']),

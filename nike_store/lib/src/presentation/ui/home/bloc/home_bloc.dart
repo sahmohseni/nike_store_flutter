@@ -32,7 +32,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 .resolve<BannerRepository>()
                 .getAllBanner()));
       } catch (e) {
-        emit(HomeError(errorMessage: 'ارتباط با سرور برقرار نشد'));
+        emit(const HomeError(errorMessage: 'ارتباط با سرور برقرار نشد'));
       }
     });
   }

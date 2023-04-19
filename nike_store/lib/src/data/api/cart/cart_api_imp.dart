@@ -13,9 +13,12 @@ class CartApiImp extends CartApi {
   }
 
   @override
-  Future<ApiResponse> changeCount(int cartItemId, int count) {
-    // TODO: implement changeCount
-    throw UnimplementedError();
+  Future<ApiResponse> changeCount(int cartItemId, int count) async {
+    final changeCountResponse = await KiwiContainer()
+        .resolve<ApiProvider>()
+        .post('http://expertdevelopers.ir/api/v1/cart/changeCount',
+            bodyParameter: {'cart_item_id': cartItemId, 'count': count});
+    return ApiResponse.fromResponse(response: changeCountResponse);
   }
 
   @override

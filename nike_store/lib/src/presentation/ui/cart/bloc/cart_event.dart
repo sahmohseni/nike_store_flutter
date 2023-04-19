@@ -24,3 +24,17 @@ class CartDeleteButtonClicked extends CartEvent {
   final int productId;
   const CartDeleteButtonClicked({required this.productId});
 }
+
+class IncrementItemCount extends CartEvent {
+  final int cartItemId;
+  const IncrementItemCount({required this.cartItemId});
+  @override
+  List<Object> get props => [cartItemId];
+}
+
+class DecrementItemCount extends CartEvent {
+  final int cartItemId;
+  const DecrementItemCount({required this.cartItemId});
+  @override
+  List<Object> get props => [cartItemId];
+}

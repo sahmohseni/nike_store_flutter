@@ -376,7 +376,7 @@ class ProductItemList extends StatelessWidget {
 
 class ImageLoadingService extends StatelessWidget {
   final String imageUrl;
-  const ImageLoadingService({required this.imageUrl});
+  const ImageLoadingService({super.key, required this.imageUrl});
   @override
   Widget build(BuildContext context) {
     return ClipRRect(

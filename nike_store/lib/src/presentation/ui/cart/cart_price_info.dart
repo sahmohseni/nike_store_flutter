@@ -68,7 +68,7 @@ class CartPriceInfo extends StatelessWidget {
                 const Text('مجموع مبلغ پرداختی'),
                 Text(
                   payablePrice.withPriceLabel,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
             ),

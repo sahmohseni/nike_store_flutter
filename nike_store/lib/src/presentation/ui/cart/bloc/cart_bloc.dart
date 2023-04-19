@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:meta/meta.dart';
+import 'package:nike_store/src/data/api/cart/cart_api.dart';
 import 'package:nike_store/src/domain/model/auth/auth_info.dart';
 import 'package:nike_store/src/domain/model/cart/cart_response.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository_imp.dart';
@@ -73,6 +74,31 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             emit(calculateCartPrice(successState.cartResponse));
           }
         }
+      } else if (event is IncrementItemCount || event is DecrementItemCount) {
+        int cartItemId = 0;
+        try {
+          if (event is IncrementItemCount) {
+            cartItemId = event.cartItemId;
+          } else if (event is DecrementItemCount) {
+            cartItemId = event.cartItemId;
+          }
+          final successState = (state as CartSuccess);
+          final index = successState.cartResponse.cartItems
+              .indexWhere((element) => element.cartItemId == cartItemId);
+          successState.cartResponse.cartItems[index].isChangeCount = true;
+          emit(CartSuccess(cartResponse: successState.cartResponse));
+          final newCount = event is IncrementItemCount
+              ? ++successState.cartResponse.cartItems[index].count
+              : --successState.cartResponse.cartItems[index].count;
+          await KiwiContainer()
+              .resolve<CartRepository>()
+              .changeCount(cartItemId, newCount);
+          successState.cartResponse.cartItems
+              .firstWhere((element) => element.cartItemId == cartItemId)
+            ..count = newCount
+            ..isChangeCount = false;
+          emit(calculateCartPrice(successState.cartResponse));
+        } catch (e) {}
       }
     });
   }

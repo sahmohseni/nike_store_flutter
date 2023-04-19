@@ -103,6 +103,17 @@ class _CartScreenState extends State<CartScreen> {
                     if (index < state.cartResponse.cartItems.length) {
                       final data = state.cartResponse.cartItems[index];
                       return CartItem(
+                        onIncrementItemTap: () {
+                          BlocProvider.of<CartBloc>(context).add(
+                              IncrementItemCount(cartItemId: data.cartItemId));
+                        },
+                        onDecremnetItemTap: () {
+                          if (data.count > 1) {
+                            BlocProvider.of<CartBloc>(context).add(
+                                DecrementItemCount(
+                                    cartItemId: data.cartItemId));
+                          }
+                        },
                         data: data,
                         onTap: () {
                           BlocProvider.of<CartBloc>(context).add(
@@ -235,10 +246,15 @@ class _CartScreenState extends State<CartScreen> {
 
 class CartItem extends StatelessWidget {
   final GestureTapCallback onTap;
+  final GestureTapCallback onIncrementItemTap;
+  final GestureTapCallback onDecremnetItemTap;
+
   const CartItem({
     super.key,
     required this.data,
     required this.onTap,
+    required this.onIncrementItemTap,
+    required this.onDecremnetItemTap,
   });
 
   final CartItemEntity data;
@@ -290,19 +306,29 @@ class CartItem extends StatelessWidget {
                     const Text('تعداد'),
                     Row(
                       children: [
-                        const Icon(CupertinoIcons.plus_square),
+                        IconButton(
+                            onPressed: onIncrementItemTap,
+                            icon: const Icon(CupertinoIcons.plus_square)),
                         const SizedBox(
                           width: 4,
                         ),
-                        Text(
-                          data.count.toString(),
-                          style: const TextStyle(
-                              fontFamily: 'dana', fontWeight: FontWeight.bold),
-                        ),
+                        data.isChangeCount
+                            ? const CupertinoActivityIndicator(
+                                color: LightTheme.primaryColor,
+                              )
+                            : Text(
+                                data.count.toString(),
+                                style: const TextStyle(
+                                    fontFamily: 'dana',
+                                    fontWeight: FontWeight.bold),
+                              ),
                         const SizedBox(
                           width: 4,
                         ),
-                        const Icon(CupertinoIcons.minus_square)
+                        IconButton(
+                          icon: const Icon(CupertinoIcons.minus_square),
+                          onPressed: onDecremnetItemTap,
+                        )
                       ],
                     )
                   ],
