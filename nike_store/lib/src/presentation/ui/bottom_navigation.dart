@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nike_store/src/presentation/ui/cart/cart.dart';
 import 'package:nike_store/src/presentation/ui/home/home.dart';
 import 'package:nike_store/src/presentation/ui/profile/profile.dart';
+import 'package:nike_store/src/presentation/widgets/cart_badge.dart';
 import 'package:nike_store/theme.dart';
 
 const int homeIndex = 0;
@@ -64,18 +65,24 @@ class _RootScreenState extends State<RootScreen> {
                 });
               },
               currentIndex: selectedScreenIndex,
-              items: const [
-                BottomNavigationBarItem(
+              items: [
+                const BottomNavigationBarItem(
                   icon: Icon(
                     CupertinoIcons.home,
                   ),
                   label: 'خانه',
                 ),
                 BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.cart),
+                    icon: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        const Icon(CupertinoIcons.cart),
+                        Positioned(right: -10, child: CartBadge(badgeValue: 7))
+                      ],
+                    ),
                     label: 'سبد خرید',
                     backgroundColor: LightTheme.itemBackGroundColor),
-                BottomNavigationBarItem(
+                const BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.profile_circled),
                     label: 'پروفایل'),
               ]),
