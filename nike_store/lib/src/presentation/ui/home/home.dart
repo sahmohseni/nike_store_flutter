@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_store/src/domain/model/product/product.dart';
 import 'package:nike_store/src/presentation/ui/home/bloc/home_bloc.dart';
-import 'package:nike_store/src/presentation/ui/product_details/product_details_screen.dart';
+import 'package:nike_store/src/presentation/ui/product_details/product/product_details_screen.dart';
 import 'package:nike_store/src/presentation/widgets/app_exception.dart';
 import 'package:nike_store/theme.dart';
 

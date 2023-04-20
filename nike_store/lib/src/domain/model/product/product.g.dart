@@ -12,7 +12,8 @@ _$_ProductEntity _$$_ProductEntityFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String,
       price: json['price'] as int,
       discount: json['discount'] as int,
-      previous_price: json['previous_price'] as int,
+      previous_price:
+          json['previous_price'] ?? json['price'] + json['discount'],
       image: json['image'] as String,
     );
 
