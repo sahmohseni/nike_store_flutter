@@ -10,10 +10,15 @@ abstract class CartEvent extends Equatable {
 
 class CartStart extends CartEvent {
   final AuthInfo? authInfo;
-  CartStart({required this.authInfo});
+  const CartStart({required this.authInfo});
 }
 
 class CartAuthChangeMode extends CartEvent {
   final AuthInfo authInfo;
-  CartAuthChangeMode({required this.authInfo});
+  const CartAuthChangeMode({required this.authInfo});
+}
+
+class CartDeleteButtonClicked extends CartEvent {
+  final int cartItemId;
+  const CartDeleteButtonClicked({required this.cartItemId});
 }

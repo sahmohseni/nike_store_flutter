@@ -167,6 +167,29 @@ class _CartScreenState extends State<CartScreen> {
                               ],
                             ),
                           ],
+                        ),
+                        const Divider(
+                          height: 1,
+                        ),
+                        Center(
+                          child: TextButton(
+                              onPressed: () {
+                                BlocProvider.of<CartBloc>(context).add(
+                                    CartDeleteButtonClicked(
+                                        cartItemId: data.cartItemId));
+                              },
+                              child: data.deleteButtonLoading
+                                  ? const CupertinoActivityIndicator(
+                                      color: LightTheme.primaryColor,
+                                    )
+                                  : const Text(
+                                      'حذف از سبد خرید',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontFamily: 'dana',
+                                        color: LightTheme.primaryColor,
+                                      ),
+                                    )),
                         )
                       ],
                     ),

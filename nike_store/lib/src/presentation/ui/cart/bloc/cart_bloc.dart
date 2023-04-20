@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:meta/meta.dart';
 import 'package:nike_store/src/domain/model/auth/auth_info.dart';
@@ -46,6 +47,32 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                   errorMessage: 'در نمایش سبدخرید مشکلی پیش آمده است'));
             }
           }
+        }
+      } else if (event is CartDeleteButtonClicked) {
+        try {
+          if (state is CartSuccess) {
+            final sucessState = (state as CartSuccess);
+            final index = sucessState.cartResponse.cartItem.indexWhere(
+                (element) => element.cartItemId == event.cartItemId);
+            sucessState.cartResponse.cartItem[index].deleteButtonLoading = true;
+            emit(CartSuccess(cartResponse: sucessState.cartResponse));
+          }
+          await Future.delayed(const Duration(seconds: 1));
+          await KiwiContainer()
+              .resolve<CartRepository>()
+              .deleteFromCart(event.cartItemId);
+          if (state is CartSuccess) {
+            final successState = (state as CartSuccess);
+            successState.cartResponse.cartItem.removeWhere(
+                (element) => element.cartItemId == event.cartItemId);
+            if (successState.cartResponse.cartItem.isEmpty) {
+              emit(CartEmpty());
+            } else {
+              emit(CartSuccess(cartResponse: successState.cartResponse));
+            }
+          }
+        } catch (e) {
+          debugPrint(e.toString());
         }
       }
     });
