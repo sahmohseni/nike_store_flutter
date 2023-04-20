@@ -12,7 +12,30 @@ import 'package:nike_store/src/presentation/widgets/app_exception.dart';
 import 'package:nike_store/src/presentation/widgets/utils.dart';
 import 'package:nike_store/theme.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  late final CartBloc cartBlocInstance;
+  @override
+  void initState() {
+    AuthRepositoryImp.authChangeNotifier.addListener(authChangeNotifierMode);
+    super.initState();
+  }
+
+  void authChangeNotifierMode() {
+    cartBlocInstance.add(CartAuthChangeMode(
+        authInfo: AuthRepositoryImp.authChangeNotifier.value!));
+  }
+
+  @override
+  void dispose() {
+    AuthRepositoryImp.authChangeNotifier.removeListener(authChangeNotifierMode);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +50,7 @@ class CartScreen extends StatelessWidget {
       body: BlocProvider<CartBloc>(
         create: (context) {
           final cartBloc = CartBloc();
+          cartBlocInstance = cartBloc;
           cartBloc.add(
               CartStart(authInfo: AuthRepositoryImp.authChangeNotifier.value));
           return cartBloc;
@@ -166,7 +190,11 @@ class CartScreen extends StatelessWidget {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
                                 LightTheme.primaryColor)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => AuthScreen(),
+                          ));
+                        },
                         child: const Text(
                           'ورود',
                           style: TextStyle(

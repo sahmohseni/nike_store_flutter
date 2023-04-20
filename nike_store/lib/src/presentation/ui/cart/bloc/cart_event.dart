@@ -12,3 +12,8 @@ class CartStart extends CartEvent {
   final AuthInfo? authInfo;
   CartStart({required this.authInfo});
 }
+
+class CartAuthChangeMode extends CartEvent {
+  final AuthInfo authInfo;
+  CartAuthChangeMode({required this.authInfo});
+}

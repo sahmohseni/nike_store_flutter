@@ -29,6 +29,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                 CartError(errorMessage: 'در نمایش سبدخرید مشکلی پیش آمده است'));
           }
         }
+      } else if (event is CartAuthChangeMode) {
+        final authInfo = AuthRepositoryImp.authChangeNotifier.value;
+        if (authInfo == null || authInfo.accessToken.isEmpty) {
+          emit(CartAuthRequired());
+        } else {
+          if (state is CartAuthRequired) {
+            try {
+              emit(CartLoading());
+              final result = await KiwiContainer()
+                  .resolve<CartRepository>()
+                  .getAllCartItem();
+              emit(CartSuccess(cartResponse: result));
+            } catch (e) {
+              emit(CartError(
+                  errorMessage: 'در نمایش سبدخرید مشکلی پیش آمده است'));
+            }
+          }
+        }
       }
     });
   }
