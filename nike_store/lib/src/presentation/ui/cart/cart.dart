@@ -49,6 +49,7 @@ class CartScreen extends StatelessWidget {
               );
             } else if (state is CartSuccess) {
               return ListView.builder(
+                physics: const BouncingScrollPhysics(),
                 itemCount: state.cartResponse.cartItem.length,
                 itemBuilder: (context, index) {
                   final data = state.cartResponse.cartItem[index];
