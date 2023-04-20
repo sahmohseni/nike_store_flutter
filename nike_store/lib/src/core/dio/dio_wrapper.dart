@@ -15,7 +15,7 @@ class DioWrapper {
   static void _onRequest(
       RequestOptions options, RequestInterceptorHandler handler) {
     final authInfo = AuthRepositoryImp.authChangeNotifier.value;
-    if (authInfo != null || authInfo!.accessToken.isNotEmpty) {
+    if (authInfo != null && authInfo.accessToken.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer ${authInfo.accessToken}';
     }
     return handler.next(options);

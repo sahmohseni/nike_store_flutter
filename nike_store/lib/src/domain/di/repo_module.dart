@@ -3,6 +3,8 @@ import 'package:nike_store/src/domain/repository/auth/auth_repository.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository_imp.dart';
 import 'package:nike_store/src/domain/repository/banner/banner_repository.dart';
 import 'package:nike_store/src/domain/repository/banner/banner_repository_imp.dart';
+import 'package:nike_store/src/domain/repository/cart/cart_repository.dart';
+import 'package:nike_store/src/domain/repository/cart/cart_repository_imp.dart';
 import 'package:nike_store/src/domain/repository/comment/comment_repository.dart';
 import 'package:nike_store/src/domain/repository/comment/comment_repository_imp.dart';
 import 'package:nike_store/src/domain/repository/product/product_repository.dart';
@@ -19,4 +21,6 @@ void repoInjector() {
       .registerSingleton<AuthRepository>((container) => AuthRepositoryImp());
   KiwiContainer()
       .registerSingleton<AuthRepositoryImp>((container) => AuthRepositoryImp());
+  KiwiContainer()
+      .registerSingleton<CartRepository>((container) => CartRepositoryImp());
 }
