@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:nike_store/src/domain/model/auth/auth_info.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository.dart';
@@ -9,6 +10,7 @@ import 'package:nike_store/src/presentation/ui/auth/auth.dart';
 import 'package:nike_store/src/presentation/ui/cart/bloc/cart_bloc.dart';
 import 'package:nike_store/src/presentation/ui/home/home.dart';
 import 'package:nike_store/src/presentation/widgets/app_exception.dart';
+import 'package:nike_store/src/presentation/widgets/empty_view.dart';
 import 'package:nike_store/src/presentation/widgets/utils.dart';
 import 'package:nike_store/theme.dart';
 
@@ -40,6 +42,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: LightTheme.primaryColor,
         centerTitle: true,
         title: const Text(
@@ -198,19 +201,12 @@ class _CartScreenState extends State<CartScreen> {
               );
             } else if (state is CartAuthRequired) {
               return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'برای مشاهده ی سبد خرید وارد حساب خود شوید',
-                      style: TextStyle(fontFamily: 'dana'),
-                    ),
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    ElevatedButton(
+                child: EmptyView(
+                    message:
+                        Text('برای مشاهده سبد خرید وارد حساب کاربری خود شوید'),
+                    callToAction: ElevatedButton(
                         style: ButtonStyle(
+                            elevation: MaterialStateProperty.all(0),
                             backgroundColor: MaterialStateProperty.all(
                                 LightTheme.primaryColor)),
                         onPressed: () {
@@ -222,9 +218,47 @@ class _CartScreenState extends State<CartScreen> {
                           'ورود',
                           style: TextStyle(
                               fontFamily: 'dana', color: Colors.white),
-                        ))
-                  ],
-                ),
+                        )),
+                    image: SvgPicture.asset(
+                      'assets/images/auth_required.svg',
+                      width: 120,
+                    )),
+                // child: Column(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: [
+                //     const Text(
+                //       'برای مشاهده ی سبد خرید وارد حساب خود شوید',
+                //       style: TextStyle(fontFamily: 'dana'),
+                //     ),
+                //     const SizedBox(
+                //       height: 12,
+                //     ),
+                //     ElevatedButton(
+                //         style: ButtonStyle(
+                //             backgroundColor: MaterialStateProperty.all(
+                //                 LightTheme.primaryColor)),
+                //         onPressed: () {
+                //           Navigator.of(context).push(MaterialPageRoute(
+                //             builder: (context) => AuthScreen(),
+                //           ));
+                //         },
+                //         child: const Text(
+                //           'ورود',
+                //           style: TextStyle(
+                //               fontFamily: 'dana', color: Colors.white),
+                //         ))
+                //   ],
+                // ),
+              );
+            } else if (state is CartEmpty) {
+              return Center(
+                child: EmptyView(
+                    message: const Text('سبد خرید شما خالی است'),
+                    image: SvgPicture.asset(
+                      'assets/images/empty_cart.svg',
+                      width: 150,
+                    )),
               );
             } else {
               throw AppException(errorMessage: 'خطا');

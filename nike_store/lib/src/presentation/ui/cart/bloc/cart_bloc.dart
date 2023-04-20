@@ -25,6 +25,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
                 .resolve<CartRepository>()
                 .getAllCartItem();
             emit(CartSuccess(cartResponse: result));
+            final successState = (state as CartSuccess);
+            if (successState.cartResponse.cartItem.isEmpty) {
+              emit(CartEmpty());
+            }
           } catch (e) {
             emit(
                 CartError(errorMessage: 'در نمایش سبدخرید مشکلی پیش آمده است'));
