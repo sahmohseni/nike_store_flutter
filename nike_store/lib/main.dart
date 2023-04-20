@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart';
-import 'package:nike_store/src/core/network/di/network_module.dart';
+import 'package:nike_store/src/core/di/network_module.dart';
 import 'package:nike_store/src/data/di/api_module.dart';
 import 'package:nike_store/src/domain/di/repo_module.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository.dart';
