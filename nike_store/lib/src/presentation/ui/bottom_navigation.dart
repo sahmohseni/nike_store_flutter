@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kiwi/kiwi.dart';
+import 'package:nike_store/src/domain/repository/auth/auth_repository.dart';
 import 'package:nike_store/src/presentation/ui/cart/cart.dart';
 import 'package:nike_store/src/presentation/ui/home/home.dart';
 import 'package:nike_store/theme.dart';
@@ -50,7 +52,42 @@ class _RootScreenState extends State<RootScreen> {
             children: [
               _Navigator(_homeKey, homeIndex, HomeScreen()),
               _Navigator(_cartKey, cartIndex, CartScreen()),
-              _Navigator(_profileKey, profileIndex, Text('profile'))
+              _Navigator(
+                  _profileKey,
+                  profileIndex,
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'خروج از حساب کاربری',
+                          style: TextStyle(
+                              fontFamily: 'dana',
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        ElevatedButton(
+                            style: ButtonStyle(
+                                elevation: MaterialStateProperty.all(0),
+                                backgroundColor: MaterialStateProperty.all(
+                                    LightTheme.primaryColor)),
+                            onPressed: () async {
+                              await KiwiContainer()
+                                  .resolve<AuthRepository>()
+                                  .signOut();
+                            },
+                            child: const Text(
+                              'خروج',
+                              style: TextStyle(
+                                  fontFamily: 'dana', color: Colors.white),
+                            ))
+                      ],
+                    ),
+                  ))
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(
