@@ -2,9 +2,9 @@ import 'package:nike_store/src/domain/model/cart/cart_item.dart';
 
 class CartResponse {
   final List<CartItemEntity> cartItems;
-  final int payablePrice;
-  final int totalPrice;
-  final int shippingCost;
+  int payablePrice;
+  int totalPrice;
+  int shippingCost;
   CartResponse.fromJson(Map<String, dynamic> json)
       : cartItems = CartItemEntity.parseJsonArray(json['cart_items']),
         payablePrice = json['payable_price'],

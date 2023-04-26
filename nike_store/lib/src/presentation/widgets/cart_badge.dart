@@ -9,6 +9,7 @@ class CartBadge extends StatelessWidget {
     return Visibility(
       visible: badgeValue > 0,
       child: Container(
+        alignment: Alignment.center,
         height: 16,
         width: 16,
         decoration: const BoxDecoration(
