@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository.dart';
+import 'package:nike_store/src/domain/repository/cart/cart_repository_imp.dart';
 import 'package:nike_store/theme.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -25,6 +26,7 @@ class ProfileScreen extends StatelessWidget {
                     backgroundColor:
                         MaterialStateProperty.all(LightTheme.primaryColor)),
                 onPressed: () async {
+                  CartRepositoryImp.cartItemCountNotifer.value = 0;
                   await KiwiContainer().resolve<AuthRepository>().signOut();
                 },
                 icon: const Icon(

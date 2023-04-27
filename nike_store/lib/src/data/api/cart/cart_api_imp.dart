@@ -22,9 +22,11 @@ class CartApiImp extends CartApi {
   }
 
   @override
-  Future<ApiResponse> count() {
-    // TODO: implement count
-    throw UnimplementedError();
+  Future<ApiResponse> count() async {
+    final countResponse = await KiwiContainer()
+        .resolve<ApiProvider>()
+        .get('http://expertdevelopers.ir/api/v1/cart/count');
+    return ApiResponse.fromResponse(response: countResponse);
   }
 
   @override

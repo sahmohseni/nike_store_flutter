@@ -65,6 +65,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         await KiwiContainer()
             .resolve<CartRepository>()
             .removeFromCart(event.productId);
+        await KiwiContainer().resolve<CartRepository>().count();
         if (state is CartSuccess) {
           final successState = (state as CartSuccess);
           successState.cartResponse.cartItems
@@ -94,6 +95,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           await KiwiContainer()
               .resolve<CartRepository>()
               .changeCount(cartItemId, newCount);
+          await KiwiContainer().resolve<CartRepository>().count();
           successState.cartResponse.cartItems
               .firstWhere((element) => element.cartItemId == cartItemId)
             ..count = newCount

@@ -6,4 +6,5 @@ abstract class CartRepository {
   Future<CartResponse> getAllCartItem();
   Future<void> changeCount(int cartItemId, int count);
   Future<void> removeFromCart(int cartItemId);
+  Future<int> count();
 }

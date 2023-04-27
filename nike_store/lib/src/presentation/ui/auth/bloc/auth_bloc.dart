@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:kiwi/kiwi.dart';
 import 'package:meta/meta.dart';
 import 'package:nike_store/src/domain/repository/auth/auth_repository.dart';
+import 'package:nike_store/src/domain/repository/cart/cart_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -18,6 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             await KiwiContainer()
                 .resolve<AuthRepository>()
                 .login(event.userName, event.passWord);
+            await KiwiContainer().resolve<CartRepository>().count();
             emit(AuthSuccess(loginMode: loginMode));
           } else {
             await KiwiContainer()

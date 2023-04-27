@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kiwi/kiwi.dart';
+import 'package:nike_store/src/domain/repository/cart/cart_repository.dart';
+import 'package:nike_store/src/domain/repository/cart/cart_repository_imp.dart';
 import 'package:nike_store/src/presentation/ui/cart/cart.dart';
 import 'package:nike_store/src/presentation/ui/home/home.dart';
 import 'package:nike_store/src/presentation/ui/profile/profile.dart';
@@ -77,7 +80,14 @@ class _RootScreenState extends State<RootScreen> {
                       clipBehavior: Clip.none,
                       children: [
                         const Icon(CupertinoIcons.cart),
-                        Positioned(right: -10, child: CartBadge(badgeValue: 7))
+                        Positioned(
+                            right: -10,
+                            child: ValueListenableBuilder<int>(
+                                valueListenable:
+                                    CartRepositoryImp.cartItemCountNotifer,
+                                builder: (context, value, child) {
+                                  return CartBadge(badgeValue: value);
+                                }))
                       ],
                     ),
                     label: 'سبد خرید',
@@ -101,5 +111,11 @@ class _RootScreenState extends State<RootScreen> {
               ),
             ),
           );
+  }
+
+  @override
+  void initState() {
+    KiwiContainer().resolve<CartRepository>().count();
+    super.initState();
   }
 }

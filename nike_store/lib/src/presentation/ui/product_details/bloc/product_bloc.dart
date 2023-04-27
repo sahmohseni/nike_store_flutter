@@ -19,6 +19,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
           await KiwiContainer()
               .resolve<CartRepository>()
               .addToCart(event.productId);
+          await KiwiContainer().resolve<CartRepository>().count();
           emit(ProductSuccess());
         }
       } catch (e) {
